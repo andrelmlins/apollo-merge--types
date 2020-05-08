@@ -1,7 +1,27 @@
 {
   "name": "apollo-read-types",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "description": "Read multiples types for apollo-server",
   "main": "index.js",
+  "module": "index.js",
+  "repository": "https://github.com/andrelmlins/apollo-read-types",
+  "author": "André Lins <andrelucas01@hotmail.com> (https://andrelmlins.github.io/)",
+  "homepage": "https://github.com/andrelmlins/apollo-read-types",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "bugs": {
+    "url": "https://github.com/andrelmlins/apollo-read-types/issues"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "apollo",
+    "read",
+    "types"
+  ]
 }
