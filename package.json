@@ -1,12 +1,12 @@
 {
-  "name": "apollo-read-types",
+  "name": "apollo-merge-types",
   "version": "0.1.0",
-  "description": "Read multiples types for apollo-server",
+  "description": "Merge multiples types for apollo-server",
   "main": "index.js",
   "module": "index.js",
-  "repository": "https://github.com/andrelmlins/apollo-read-types",
+  "repository": "https://github.com/andrelmlins/apollo-merge-types",
   "author": "André Lins <andrelucas01@hotmail.com> (https://andrelmlins.github.io/)",
-  "homepage": "https://github.com/andrelmlins/apollo-read-types",
+  "homepage": "https://github.com/andrelmlins/apollo-merge-types",
   "license": "MIT",
   "private": false,
   "files": [
@@ -14,7 +14,7 @@
     "README.md"
   ],
   "bugs": {
-    "url": "https://github.com/andrelmlins/apollo-read-types/issues"
+    "url": "https://github.com/andrelmlins/apollo-merge-types/issues"
   },
   "scripts": {
     "start": "node index.js"
