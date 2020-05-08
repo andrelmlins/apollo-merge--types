@@ -10,7 +10,7 @@ const fs = require('fs');
 const apolloMergeTypes = path => {
   const files = fs.readdirSync(path);
 
-  let definitions = [...scalars().definitions];
+  let definitions = [];
   let Query;
   let Mutation;
 
