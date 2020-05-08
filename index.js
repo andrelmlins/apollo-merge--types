@@ -1,27 +1,30 @@
-"use strict";
+'use strict';
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
 
-const getTypes = () => {
-  const basePath = path.join(process.cwd(), "/dist/types");
-  const files = fs.readdirSync(basePath);
+/**
+ * Read Types
+ * @param  {String|Array} path directory where types are
+ * @return  {Object} return object with types
+ */
+const apolloReadTypes = path => {
+  const files = fs.readdirSync(path);
 
   let definitions = [...scalars().definitions];
   let Query;
   let Mutation;
 
   files.forEach(item => {
-    const type = require(path.join(basePath, item)).default;
+    const type = require(path.join(path, item)).default;
 
     type.definitions.forEach(definition => {
-      if (definition.name.value === "Query") {
+      if (definition.name.value === 'Query') {
         if (!Query) {
           Query = definition;
         } else {
           Query.fields = [...Query.fields, ...definition.fields];
         }
-      } else if (definition.name.value === "Mutation") {
+      } else if (definition.name.value === 'Mutation') {
         if (!Mutation) {
           Mutation = definition;
         } else {
@@ -36,7 +39,7 @@ const getTypes = () => {
   Query && definitions.push(Query);
   Mutation && definitions.push(Mutation);
 
-  return { kind: "Document", definitions };
+  return { kind: 'Document', definitions };
 };
 
-export default getTypes;
+module.exports = apolloReadTypes;
