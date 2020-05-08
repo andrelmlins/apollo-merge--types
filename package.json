@@ -4,12 +4,14 @@
   "description": "Merge multiples types for apollo-server",
   "main": "index.js",
   "module": "index.js",
+  "types": "index.d.ts",
   "repository": "https://github.com/andrelmlins/apollo-merge-types",
   "author": "André Lins <andrelucas01@hotmail.com> (https://andrelmlins.github.io/)",
   "homepage": "https://github.com/andrelmlins/apollo-merge-types",
   "license": "MIT",
   "private": false,
   "files": [
+    "index.d.ts",
     "index.js",
     "README.md"
   ],

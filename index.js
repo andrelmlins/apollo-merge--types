@@ -3,11 +3,11 @@
 const fs = require('fs');
 
 /**
- * Read Types
+ * Read and Merge Types
  * @param  {String|Array} path directory where types are
  * @return  {Object} return object with types
  */
-const apolloReadTypes = path => {
+const apolloMergeTypes = path => {
   const files = fs.readdirSync(path);
 
   let definitions = [...scalars().definitions];
@@ -42,4 +42,4 @@ const apolloReadTypes = path => {
   return { kind: 'Document', definitions };
 };
 
-module.exports = apolloReadTypes;
+module.exports = apolloMergeTypes;
