@@ -18,24 +18,40 @@ yarn add apollo-merge-types
 
 ## Usage
 
-**Call Async**
+**Javascript**
 
 ```js
-const choosePort = require('choose-port');
+const { ApolloServer } = require('apollo-server-express');
+const apolloMergeTypes = require('apollo-merge-types');
 
-choosePort(8000, '127.0.0.1', portValid => {
-  console.log('Chosen port:', portValid);
+const basePath = path.join(process.cwd(), '/src/types');
+const server = new ApolloServer({
+  // ...
+  typeDefs: apolloMergeTypes(basePath)
+  // ...
+});
+
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
 });
 ```
 
-**Call Sync**
+**Typescript**
 
 ```js
-const { choosePortSync } = require('choose-port');
+import { ApolloServer } from 'apollo-server-express';
+import apolloMergeTypes from 'apollo-merge-types';
 
-const portValid = choosePortSync(8000, '127.0.0.1');
+const basePath: string = path.join(process.cwd(), '/src/types');
+const server = new ApolloServer({
+  // ...
+  typeDefs: apolloMergeTypes(basePath)
+  // ...
+});
 
-console.log(portValid);
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
 ```
 
 ## NPM Statistics
