@@ -1,21 +1,22 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 /**
  * Read and Merge Types
- * @param  {String|Array} path directory where types are
+ * @param  {String|Array} basePath directory where types are
  * @return  {Object} return object with types
  */
-const apolloMergeTypes = path => {
-  const files = fs.readdirSync(path);
+const apolloMergeTypes = basePath => {
+  const files = fs.readdirSync(basePath);
 
   let definitions = [];
   let Query;
   let Mutation;
 
   files.forEach(item => {
-    const type = require(path.join(path, item)).default;
+    const type = require(path.join(basePath, item)).default;
 
     type.definitions.forEach(definition => {
       if (definition.name.value === 'Query') {
