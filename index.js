@@ -9,75 +9,67 @@ const path = require('path');
  * @return  {Object} return object with types
  */
 const apolloMergeTypes = basePath => {
+  let object = {
+    definitions: [],
+    Query: null,
+    Mutation: null,
+    Subscription: null
+  };
+
   if (Array.isArray(basePath)) {
-    let definitions = [];
-    let Query;
-    let Mutation;
-
     basePath.map(pathItem => {
-      const files = fs.readdirSync(pathItem);
-
-      files.forEach(item => {
-        const type = require(path.join(pathItem, item)).default;
-
-        type.definitions.forEach(definition => {
-          if (definition.name.value === 'Query') {
-            if (!Query) {
-              Query = definition;
-            } else {
-              Query.fields = [...Query.fields, ...definition.fields];
-            }
-          } else if (definition.name.value === 'Mutation') {
-            if (!Mutation) {
-              Mutation = definition;
-            } else {
-              Mutation.fields = [...Mutation.fields, ...definition.fields];
-            }
-          } else {
-            definitions.push(definition);
-          }
-        });
-      });
-
-      Query && definitions.push(Query);
-      Mutation && definitions.push(Mutation);
+      object = getDefinitions(pathItem, object);
     });
-
-    return { kind: 'Document', definitions };
   } else {
-    const files = fs.readdirSync(basePath);
-
-    let definitions = [];
-    let Query;
-    let Mutation;
-
-    files.forEach(item => {
-      const type = require(path.join(basePath, item)).default;
-
-      type.definitions.forEach(definition => {
-        if (definition.name.value === 'Query') {
-          if (!Query) {
-            Query = definition;
-          } else {
-            Query.fields = [...Query.fields, ...definition.fields];
-          }
-        } else if (definition.name.value === 'Mutation') {
-          if (!Mutation) {
-            Mutation = definition;
-          } else {
-            Mutation.fields = [...Mutation.fields, ...definition.fields];
-          }
-        } else {
-          definitions.push(definition);
-        }
-      });
-    });
-
-    Query && definitions.push(Query);
-    Mutation && definitions.push(Mutation);
-
-    return { kind: 'Document', definitions };
+    object = getDefinitions(basePath, object);
   }
+
+  let definitions = object.definitions;
+  object.Query && definitions.push(object.Query);
+  object.Mutation && definitions.push(object.Mutation);
+  object.Subscription && definitions.push(object.Subscription);
+
+  return { kind: 'Document', definitions };
+};
+
+const getDefinitions = (basePath, object) => {
+  const files = fs.readdirSync(basePath);
+
+  files.forEach(item => {
+    const type = require(path.join(basePath, item)).default;
+
+    type.definitions.forEach(definition => {
+      if (definition.name.value === 'Query') {
+        if (!object.Query) {
+          object.Query = definition;
+        } else {
+          object.Query.fields = [...object.Query.fields, ...definition.fields];
+        }
+      } else if (definition.name.value === 'Mutation') {
+        if (!object.Mutation) {
+          object.Mutation = definition;
+        } else {
+          object.Mutation.fields = [
+            ...object.Mutation.fields,
+            ...definition.fields
+          ];
+        }
+      } else if (definition.name.value === 'Subscription') {
+        if (!object.Subscription) {
+          object.Subscription = definition;
+        } else {
+          object.Subscription.fields = [
+            ...object.Subscription.fields,
+            ...definition.fields
+          ];
+        }
+      } else {
+        object.definitions.push(definition);
+      }
+    });
+  });
+
+  return object;
 };
 
 module.exports = apolloMergeTypes;
